@@ -1,5 +1,6 @@
 import os
 import gzip
+import sys
 
 def extract_named_files(folder_path, filename):
   """
@@ -21,17 +22,15 @@ def extract_named_files(folder_path, filename):
         print(f"Extracted file: {file_path} to {extracted_filename}")
 
 # Replace these with your desired values
-folder_path = r"C:\Users\mrdyl\Downloads\Synthrad data\Task1\Task1\brain"  # Change this to your folder path
+folder_path = r"C:\Users\mrdyl\Downloads\Synthrad data\Task1\Task1\brain"
+
+environpath = os.environ.get("FILEPATH")
+if environpath is not None:
+  folder_path = environpath
+
 filename = r"mr.nii"  # Change this to the filename (without .gz)
 
 # This part prints the files to be extracted and asks for confirmation before extracting
 print("The following files will be extracted:")
 extract_named_files(folder_path, filename)
-
-confirmation = input("Are you sure you want to extract these files? (y/n): ")
-if confirmation.lower() == "y":
-  extract_named_files(folder_path, filename)
-  print("Files extracted successfully!")
-else:
-  print("Extraction cancelled.")
 

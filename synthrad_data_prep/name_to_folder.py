@@ -1,4 +1,5 @@
 import os
+import sys
 
 def rename_files(folder_path):
   """
@@ -19,14 +20,11 @@ def rename_files(folder_path):
 # Replace with your desired folder path
 folder_path = r"C:\Users\mrdyl\Downloads\Synthrad data\Task1\Task1\brain"
 
+environpath = os.environ.get("FILEPATH")
+if environpath is not None:
+  folder_path = environpath
+
 # This part prints the files to be renamed and asks for confirmation before renaming
 print("The following files will be renamed:")
 rename_files(folder_path)
-
-confirmation = input("Are you sure you want to rename these files? (y/n): ")
-if confirmation.lower() == "y":
-  rename_files(folder_path)
-  print("Files renamed successfully!")
-else:
-  print("Renaming cancelled.")
 
