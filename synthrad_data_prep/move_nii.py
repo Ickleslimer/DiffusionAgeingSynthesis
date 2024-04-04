@@ -16,7 +16,7 @@ destination_folder = os.path.join(desktop_path, destination_name)
 
 os.makedirs(destination_folder, exist_ok=True)  # Handles existing folders
 
-root_folder = r"C:\Users\mrdyl\Downloads\Synthrad data\Task1\Task1\brain"
+root_folder = r"C:\Users\mrdyl\Downloads\Task1\Task1\brain"
 
 environpath = os.environ.get("FILEPATH")
 if environpath is not None:
@@ -29,5 +29,5 @@ for path, subdirs, files in os.walk(root_folder):
             destination = os.path.join(destination_folder, filename)
             shutil.move(file_path, destination)
 
-print("All .nii files have been moved to the folder Synthrad_MRI_NII on your Desktop!")
+print("All .nii files have been moved to the folder " + destination_name + " on your Desktop!")
 

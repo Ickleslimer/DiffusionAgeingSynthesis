@@ -1,15 +1,22 @@
 import sys
 import subprocess
 import os
+import shutil
+import gzip
 
-filepath = r"C:\Users\mrdyl\Downloads\Synthrad data\Task1\Task1\brain"
+filepath = r"C:\Users\mrdyl\Downloads\Task1\Task1\brain"
 destination = "test"
+overview_folder = os.path.join(filepath, "overview")
 
 if len(sys.argv) > 1:
     filepath = sys.argv[1]
 
 if len(sys.argv) > 2:
     destination = sys.argv[2]
+
+if os.path.exists(overview_folder):
+    shutil.rmtree(overview_folder, ignore_errors=True)
+    print(f"Folder '{overview_folder}' deleted.")
 
 os.environ["DESTINATION"] = destination
 os.environ["FILEPATH"] = filepath

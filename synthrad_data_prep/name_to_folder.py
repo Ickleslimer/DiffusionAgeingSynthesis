@@ -18,7 +18,7 @@ def rename_files(folder_path):
       os.rename(old_file_path, new_file_path)
 
 # Replace with your desired folder path
-folder_path = r"C:\Users\mrdyl\Downloads\Synthrad data\Task1\Task1\brain"
+folder_path = r"C:\Users\mrdyl\Downloads\Task1\Task1\brain"
 
 environpath = os.environ.get("FILEPATH")
 if environpath is not None:

@@ -22,7 +22,7 @@ def extract_named_files(folder_path, filename):
         print(f"Extracted file: {file_path} to {extracted_filename}")
 
 # Replace these with your desired values
-folder_path = r"C:\Users\mrdyl\Downloads\Synthrad data\Task1\Task1\brain"
+folder_path = r"C:\Users\mrdyl\Downloads\Task1\Task1\brain"
 
 environpath = os.environ.get("FILEPATH")
 if environpath is not None:
