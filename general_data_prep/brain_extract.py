@@ -1,31 +1,36 @@
 import os
-from nilearn import image
+from nilearn import plotting
+import subprocess
 
-# Define the path to the folder containing the .nii files
-input_folder = "path/to/your/input_folder"
+os.environ['FSLOUTPUTTYPE'] = 'NIFTI'
 
-# Loop through each .nii file in the folder
-for filename in os.listdir(input_folder):
-    if filename.endswith(".nii"):
-        input_path = os.path.join(input_folder, filename)
+# Specify the path to the input folder containing MRI images
+input_folder = r'C:\Users\mrdyl\Desktop\Synthrad_MRI_NII'
 
-        # Extract the base filename without extension
-        base_filename = os.path.splitext(filename)[0]
+# Specify the path to the output folder for the skull-stripped images
+output_folder = r'C:\Users\mrdyl\Desktop\Stripped_Synthrad_MRI_NII'
 
-        # Define output paths for the brain mask and brain image
-        output_mask_path = os.path.join(input_folder, base_filename + "_brain_mask.nii")
-        output_image_path = os.path.join(input_folder, base_filename + "_brain_image.nii")
+# Create the output folder if it doesn't exist
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
 
-        # Load the image
-        input_img = image.load_img(input_path)
+# Get a list of all .nii files in the input folder
+input_files = [os.path.join(input_folder, f) for f in os.listdir(input_folder) if f.endswith('.nii')]
 
-        # Perform BET
-        brain_mask, brain_img = image.bet(input_img, return_mask=True)
+# Iterate over each input file and perform skull-stripping
+for input_file in input_files:
+  # Assuming FSL bin directory is at \\wsl.localhost\Ubuntu\home\ickleslimer\fsl\bin
+    command = ['\\wsl.localhost\\Ubuntu\\home\\ickleslimer\\fsl\\bin\\bet', 
+              '-i', input_folder, '-o', output_folder]
 
-        # Save the extracted brain mask and brain image
-        image.save_img(brain_mask, output_mask_path)
-        image.save_img(brain_img, output_image_path)
+  # Use the subprocess module to call the external command (bet)
+    subprocess.run(command)
+    
+    # Set input and output file paths for skull-stripped image
+    output_file = os.path.join(output_folder, os.path.basename(input_file).replace('.nii', '_skullstripped.nii.gz'))
 
-        print(f"BET completed for {filename}! Results saved at: {output_mask_path}, {output_image_path}")
+    # Load the original and skull-stripped images using Nilearn for visualization
+    original_img = input_file
+    skull_stripped_img = output_file
 
-print("Finished processing all .nii files in the folder!")
+    plotting.plot_roi(skull_stripped_img, bg_img=original_img, title='Skull-stripped Image')
