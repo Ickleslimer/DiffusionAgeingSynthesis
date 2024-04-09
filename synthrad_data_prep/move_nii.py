@@ -10,13 +10,12 @@ destination_name = "untitled"
 
 environdestination = os.environ.get("DESTINATION")
 if environdestination is not None:
-  destination_name = environdestination
+  destination_folder = environdestination
 # Construct the destination folder path (combine desktop path and folder name)
-destination_folder = os.path.join(desktop_path, destination_name)
 
 os.makedirs(destination_folder, exist_ok=True)  # Handles existing folders
 
-root_folder = r"C:\Users\mrdyl\Downloads\Task1\Task1\brain"
+root_folder = "synthrad_data\Task1\Task1\brain"
 
 environpath = os.environ.get("FILEPATH")
 if environpath is not None:

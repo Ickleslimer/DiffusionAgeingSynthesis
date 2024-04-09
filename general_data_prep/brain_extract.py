@@ -8,7 +8,7 @@ os.environ['FSLOUTPUTTYPE'] = 'NIFTI'
 input_folder = r'C:\Users\mrdyl\Desktop\Synthrad_MRI_NII'
 
 # Specify the path to the output folder for the skull-stripped images
-output_folder = r'C:\Users\mrdyl\Desktop\Stripped_Synthrad_MRI_NII'
+output_folder = 'synthrad_data\stripped_synthrad'
 
 # Create the output folder if it doesn't exist
 if not os.path.exists(output_folder):

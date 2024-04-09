@@ -23,7 +23,7 @@ def extract_and_delete_gz_files(folder_path):
                 print(f"Deleted file: {file_path}")
 
 # Replace this with your desired folder path
-folder_path = r"C:\Users\mrdyl\Desktop\Stripped_Synthrad_MRI_NII"
+folder_path = "synthrad_data\stripped_synthrad"
 
 # This part prints the files to be extracted and deleted and asks for confirmation before performing the actions
 print("The following files will be extracted and deleted:")

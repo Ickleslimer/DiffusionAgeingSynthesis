@@ -18,7 +18,7 @@ def delete_named_files(folder_path, filenames):
                 os.remove(file_path)
 
 # Replace these with your desired values
-folder_path = r"C:\Users\mrdyl\Downloads\Task1\Task1\brain"
+folder_path = r"synthrad_data\Task1\Task1\brain"
 
 environpath = os.environ.get("FILEPATH")
 if environpath is not None:
