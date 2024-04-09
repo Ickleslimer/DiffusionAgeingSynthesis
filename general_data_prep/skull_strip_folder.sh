@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the folder containing your .nii files
-input_folder="synthrad_data\synthrad_skulls"
+input_folder="synthrad_data/synthrad_skulls"
 
 # Check if the input folder is provided as an argument
 if [ -z "$input_folder" ]; then
@@ -10,7 +10,7 @@ if [ -z "$input_folder" ]; then
 fi
 
 # Define the output folder on the desktop
-output_folder="synthrad_data\stripped_synthrad"
+output_folder="synthrad_data/stripped_synthrad"
 
 # Create the output folder if it doesn't exist
 if [ ! -d "$output_folder" ]; then
@@ -19,7 +19,8 @@ if [ ! -d "$output_folder" ]; then
 fi
 
 # Loop through each file in the folder
-for filename in "$input_folder"/*.nii; do
+for filename in $input_folder/*.nii; do
+  echo "filename = $filename"
   # Extract the filename without extension
   base_filename=$(basename "$filename" .nii)
 
@@ -34,3 +35,5 @@ for filename in "$input_folder"/*.nii; do
 done
 
 echo "Skull-stripping process completed!"
+rm -rf "$input_folder"
+echo "Input folder deleted: $input_folder"

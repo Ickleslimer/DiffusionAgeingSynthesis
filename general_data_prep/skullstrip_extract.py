@@ -23,8 +23,10 @@ def extract_and_delete_gz_files(folder_path):
                 print(f"Deleted file: {file_path}")
 
 # Replace this with your desired folder path
-folder_path = "synthrad_data\stripped_synthrad"
+folder_path = "synthrad_data/stripped_synthrad"
 
+if os.path.exists(folder_path) == False:
+    print(f"Error: Folder '{folder_path}' does not exist.")
 # This part prints the files to be extracted and deleted and asks for confirmation before performing the actions
 print("The following files will be extracted and deleted:")
 extract_and_delete_gz_files(folder_path)
