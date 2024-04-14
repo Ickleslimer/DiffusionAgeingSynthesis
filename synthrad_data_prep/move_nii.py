@@ -28,5 +28,5 @@ for path, subdirs, files in os.walk(root_folder):
             destination = os.path.join(destination_folder, filename)
             shutil.move(file_path, destination)
 
-print("All .nii files have been moved to the folder " + destination_name + " on your Desktop!")
+print("All .nii files have been moved to the folder " + destination_folder + "!")
 

@@ -1,0 +1,5 @@
+reference_folder="synthrad_data/stripped_synthrad/middle_slices/registered_1BA001_skullstripped"
+
+results_folder="synthrad_data/stripped_synthrad/middle_slices/registered_1BA012_skullstripped"
+
+python -m pytorch_fid $reference_folder $results_folder

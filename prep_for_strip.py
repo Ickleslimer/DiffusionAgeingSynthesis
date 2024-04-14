@@ -7,7 +7,6 @@ import zipfile
 filepath = r"synthrad_data/Task1/Task1/brain"
 destination = "synthrad_data/synthrad_skulls"
 overview_folder = os.path.join(filepath, "overview")
-pelvis_folder = "synthrad_data/Task1/Task1/pelvis"
 
 if len(sys.argv) > 1:
     filepath = sys.argv[1]

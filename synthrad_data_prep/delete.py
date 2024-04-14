@@ -25,7 +25,5 @@ if environpath is not None:
     folder_path = environpath
 
 filenames = ["mr.nii.gz", "ct.nii.gz", "mask.nii.gz"]  # List of filenames to delete
-
 # This part prints the files to be deleted and asks for confirmation before deleting
-print("The following files will be deleted:")
 delete_named_files(folder_path, filenames)
