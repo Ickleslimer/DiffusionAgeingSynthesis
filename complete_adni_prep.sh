@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python synthrad_data_prep/synthrad_prep_for_strip.py
+python adni_data_prep/adni_prep_for_strip.py
 
 source general_data_prep/skull_strip_folder.sh
 

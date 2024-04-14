@@ -1,9 +1,8 @@
 import ants
-import nibabel as nib
 import os
 
 
-root_folder = "synthrad_data/stripped_synthrad"
+root_folder = "adni_t1"
 
 environpath = os.environ.get("FILEPATH")
 if environpath is not None:
@@ -20,6 +19,7 @@ def register_nii_files(root_folder):
                 if first_nii_path is None:
                     first_nii_path = file_path
                     template_img = ants.image_read(first_nii_path)
+                    os.rename(first_nii_path,f"registered_{filename}")
                     print(f"Registered image {filename} as template")
                 else:
 
@@ -30,7 +30,7 @@ def register_nii_files(root_folder):
                     verbose=True)
                     
                     registered_img = transformation['warpedmovout']
-                    registered_img.to_file(os.path.join(root_folder, f"registered_{filename}"))
+                    registered_img.to_file(os.path.join(path, f"registered_{filename}"))
                     print(f"Registered image {filename}")
 
 register_nii_files(root_folder)

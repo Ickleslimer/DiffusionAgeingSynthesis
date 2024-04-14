@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the folder containing your .nii files
-input_folder="synthrad_data/synthrad_skulls"
+input_folder="adni_t1"
 
 # Check if the input folder is provided as an argument
 if [ -z "$input_folder" ]; then
@@ -9,23 +9,20 @@ if [ -z "$input_folder" ]; then
   exit 1
 fi
 
-# Define the output folder on the desktop
-output_folder="synthrad_data/stripped_synthrad"
-
 # Create the output folder if it doesn't exist
 if [ ! -d "$output_folder" ]; then
   mkdir -p "$output_folder"
   echo "Output folder created: $output_folder"
 fi
 
-# Loop through each file in the folder
-for filename in $input_folder/*.nii; do
+# Loop through each file in the folder and its subdirectories recursively
+for filename in $(find "$input_folder" -type f -name "*.nii"); do
   echo "filename = $filename"
-  # Extract the filename without extension
-  base_filename=$(basename "$filename" .nii)
+  # Extract the directory path from the filename
+  file_directory=$(dirname "$filename")
 
-  # Define the output filename with _skullstripped suffix
-  output_filename="$output_folder/${base_filename}_skullstripped.nii"
+  # Construct the output filename with _skullstripped suffix within the original directory
+  output_filename="$file_directory/$(basename "$filename" .nii)_skullstripped.nii"
 
   # Run bet on the current file
   bet "$filename" "$output_filename"
@@ -35,5 +32,5 @@ for filename in $input_folder/*.nii; do
 done
 
 echo "Skull-stripping process completed!"
-rm -rf "$input_folder"
-echo "Input folder deleted: $input_folder"
+#rm -rf "$input_folder"
+#echo "Input folder deleted: $input_folder"

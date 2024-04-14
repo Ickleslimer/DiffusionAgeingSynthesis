@@ -1,7 +1,6 @@
 import os
 import nibabel as nib
 from PIL import Image
-import shutil
 import numpy as np
 
 def convert_nii_to_jpg(nii_folder, output_folder_base):
@@ -14,24 +13,25 @@ def convert_nii_to_jpg(nii_folder, output_folder_base):
       nii_folder (str): Path to the folder containing .nii files.
       output_folder_base (str): Base path to create/home/ickleslimer/Documents/DiffusionAgeingSynthesis/synthrad_data/stripped_synthrad/1BA105_skullstripped separate output folders for each nii file.
   """
-  for filename in os.listdir(nii_folder):
-    if filename.endswith(".nii"):
+  for path, subdirs, files in os.walk(nii_folder):
+    for filename in files:
+        if filename.endswith(".nii"):
       # Extract file name without extension
-      file_name, _ = os.path.splitext(filename)
+        file_name, _ = os.path.splitext(filename)
       # Create output folder with filename as name
-      output_folder = os.path.join(output_folder_base, file_name)
-      os.makedirs(output_folder, exist_ok=True)  # Create folder if it doesn't exist
+        output_folder = os.path.join(output_folder_base, file_name)
+        os.makedirs(output_folder, exist_ok=True)  # Create folder if it doesn't exist
       
       # Full path to the nii file
-      nii_file = os.path.join(nii_folder, filename)
+        nii_file = os.path.join(nii_folder, filename)
       
-      try:
-        convert_single_nii(nii_file, output_folder)
+        try:
+          convert_single_nii(nii_file, output_folder)
         # Delete nii file after successful conversion
         #os.remove(nii_file)
-        print(f"Converted {nii_file} to jpgs and deleted the original file.")
-      except Exception as e:
-        print(f"Error converting {nii_file}: {e}")
+          print(f"Converted {nii_file} to jpgs and deleted the original file.")
+        except Exception as e:
+          print(f"Error converting {nii_file}: {e}")
       
 def convert_single_nii(nii_file, output_folder):
   """
@@ -65,35 +65,36 @@ def extract_middle_slices(nii_folder, output_folder):
       output_folder (str): Path to the output folder where middle slices will be saved.
   """
   os.makedirs(output_folder, exist_ok=True)  # Create output folder if it doesn't exist
-  for filename in os.listdir(nii_folder):
-    if filename.endswith(".nii"):
+  for path, subdirs, files in os.walk(nii_folder):
+    for filename in files:
+      if filename.endswith(".nii"):
       # Extract file name without extension
-      file_name, _ = os.path.splitext(filename)
+        file_name, _ = os.path.splitext(filename)
       
       # Full path to the nii file
-      nii_file = os.path.join(nii_folder, filename)
+        nii_file = os.path.join(nii_folder, filename)
       
-      try:
+        try:
         # Load the .nii file
-        img = nib.load(nii_file)
-        img_data = img.get_fdata()
+          img = nib.load(nii_file)
+          img_data = img.get_fdata()
         
         # Calculate the middle slice index (integer division for floor)
-        middle_slice = img_data.shape[2] // 2
+          middle_slice = img_data.shape[2] // 2
         
         # Extract the middle slice
-        middle_slice_data = img_data[:, :, middle_slice]
+          middle_slice_data = img_data[:, :, middle_slice]
         
         # Convert data type (assuming data is in range 0-255)
-        middle_slice_data = middle_slice_data.astype(np.uint8)  
-        img = Image.fromarray(middle_slice_data)
+          middle_slice_data = middle_slice_data.astype(np.uint8)  
+          img = Image.fromarray(middle_slice_data)
         
         # Specify filename with original name and "_middle" suffix
-        output_filename = f"{output_folder}/{file_name}_middle.jpg"
-        img.save(output_filename)
-        print(f"Extracted middle slice from {nii_file} and saved to {output_filename}")
-      except Exception as e:
-        print(f"Error processing {nii_file}: {e}")
+          output_filename = f"{output_folder}/{file_name}_middle.jpg"
+          img.save(output_filename)
+          print(f"Extracted middle slice from {nii_file} and saved to {output_filename}")
+        except Exception as e:
+          print(f"Error processing {nii_file}: {e}")
 
 def extract_middle_percentage_slices(nii_folder, output_folder_base, percentage=0.3):
   """
@@ -104,23 +105,24 @@ def extract_middle_percentage_slices(nii_folder, output_folder_base, percentage=
       output_folder_base (str): Base path to create separate output folders for each nii file.
       percentage (float, optional): Percentage of slices to extract around the middle (defaults to 0.3).
   """
-  for filename in os.listdir(nii_folder):
-    if filename.endswith(".nii"):
+  for path, subdirs, files in os.walk(nii_folder):
+    for filename in files:
+      if filename.endswith(".nii"):
       # Extract file name without extension
-      file_name, _ = os.path.splitext(filename)
+        file_name, _ = os.path.splitext(filename)
       # Create output folder with filename as name
-      output_folder = os.path.join(output_folder_base, file_name)
-      os.makedirs(output_folder, exist_ok=True)  # Create folder if it doesn't exist
+        output_folder = os.path.join(output_folder_base, file_name)
+        os.makedirs(output_folder, exist_ok=True)  # Create folder if it doesn't exist
 
       # Full path to the nii file
-      nii_file = os.path.join(nii_folder, filename)
+        nii_file = os.path.join(nii_folder, filename)
 
-      try:
+        try:
         # Extract and save middle percentage slices
-        extract_middle_percentage_slices_single(nii_file, output_folder, percentage)
-        print(f"Extracted middle {percentage*100:.0f}% slices from {nii_file} and saved to {output_folder}")
-      except Exception as e:
-        print(f"Error processing {nii_file}: {e}")
+          extract_middle_percentage_slices_single(nii_file, output_folder, percentage)
+          print(f"Extracted middle {percentage*100:.0f}% slices from {nii_file} and saved to {output_folder}")
+        except Exception as e:
+          print(f"Error processing {nii_file}: {e}")
 
 def extract_middle_percentage_slices_single(nii_file, output_folder, percentage=0.3):
   """
@@ -154,6 +156,6 @@ def extract_middle_percentage_slices_single(nii_file, output_folder, percentage=
 
 
 # Example usage
-nii_folder = "synthrad_data/stripped_synthrad"
-output_folder_base = "synthrad_data/stripped_synthrad/middle_slices"
+nii_folder = "adni_t1"
+output_folder_base = nii_folder
 extract_middle_percentage_slices(nii_folder,output_folder_base,0.1)
