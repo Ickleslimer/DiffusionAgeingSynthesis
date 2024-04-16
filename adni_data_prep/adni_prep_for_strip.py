@@ -4,20 +4,14 @@ import os
 import shutil
 import zipfile
 
+#Define folder containing MRIs and output folder for prepared NII files
 filepath = r"adni_t1"
 destination = "adni_t1/adni_skulls"
 
-if len(sys.argv) > 1:
-    filepath = sys.argv[1]
-
-if len(sys.argv) > 2:
-    destination = sys.argv[2]
-
+#Set environment variables for use in other scripts
 os.environ["DESTINATION"] = destination
 os.environ["FILEPATH"] = filepath
 
-# Get absolute paths for the scripts
+#Run the script to remove all .identifier files from the copying of data
 remove_identifiers_script = "adni_data_prep/remove_identifiers.py"
-
-# Execute the scripts using absolute paths
 subprocess.run(['python', remove_identifiers_script], check=True)

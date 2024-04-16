@@ -2,16 +2,9 @@ import os
 import gzip
 import sys
 
-def extract_named_files(folder_path, filename):
-  """
-  This function extracts files with the specified name from gz format
-  in the given folder and all its subfolders.
-
-  Args:
-    folder_path: The path to the folder where the search starts.
-    filename: The base name of the files to extract (without the .gz extension).
-  """
-  for root, directories, files in os.walk(folder_path):
+def extract_named_files(root_folder, filename):
+#Iterates through all subfolders of the target folder, checking files found against the set filename and extracting matches
+  for root, directories, files in os.walk(root_folder):
     for file in files:
       if file.endswith(".gz") and file[:-3] == filename:
         file_path = os.path.join(root, file)
@@ -21,16 +14,13 @@ def extract_named_files(folder_path, filename):
             extracted_file.write(gz_file.read())
         print(f"Extracted file: {file_path} to {extracted_filename}")
 
-# Replace these with your desired values
-folder_path = r"synthrad_data\Task1\Task1\brain"
-
+#Sets folder to check, overwriting with environment variable if set
+root_folder = r"synthrad_data\Task1\Task1\brain"
 environpath = os.environ.get("FILEPATH")
 if environpath is not None:
-  folder_path = environpath
+  root_folder = environpath
 
-filename = r"mr.nii"  # Change this to the filename (without .gz)
+filename = r"mr.nii"
 
-# This part prints the files to be extracted and asks for confirmation before extracting
-print("The following files will be extracted:")
-extract_named_files(folder_path, filename)
+extract_named_files(root_folder, filename)
 
