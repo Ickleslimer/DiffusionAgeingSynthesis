@@ -1,8 +1,6 @@
-gzip
-shutil
-subprocess
-os
-sys
 pathlib
 nilearn
 AntsPyx
+Pillow
+Nibabel
+NumPy
